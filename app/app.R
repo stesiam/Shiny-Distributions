@@ -48,7 +48,7 @@ sidebar = dashboardSidebar(
    
    conditionalPanel(
      condition = "input.discrete_dist == 'poisson'",
-     numericInput("lambda", "Lambda" , value = 2)),
+     numericInput("lambda_poisson", "Lambda" , value = 2)),
    
    ## Geometric
    
@@ -106,11 +106,53 @@ sidebar = dashboardSidebar(
                 c("Normal" = "normal",
                   "Uniform" = "uniform",
                   "Expenential" = "exp",
-                  "Gamma" = "gamma",
                   "Beta" = "beta",
                   "Cauchy" = "cauchy",
                   "Weibull" = "weibull")),
     
+    ## Normal Distribution
+    
+    conditionalPanel(
+      condition = "input.contin_distributions == 'normal'",
+      numericInput("mean_normal", "mu" , value = 10, min = 1, max = 45),
+      numericInput("var_normal", "sigma" , value = 16, min = 1, max = 100)),
+    
+    ## Uniform Distribution
+    
+    conditionalPanel(
+      condition = "input.contin_distributions== 'uniform'",
+      sliderInput("a_unif", "a" , value = 10, min = 1, max = 45),
+      sliderInput("b_unif", "b" , value = 16, min = 1, max = 100)),
+    
+    ## Exponential Distribution
+    
+    conditionalPanel(
+      condition = "input.contin_distributions== 'exp'",
+      sliderInput("lambda_exp", "lambda" , value = 10, min = 1, max = 45)),
+    
+    
+    ## Beta Distribution
+    
+    conditionalPanel(
+      condition = "input.contin_distributions== 'beta'",
+      sliderInput("a_beta", "a" , value = 10, min = 1, max = 45),
+      sliderInput("b_beta", "b" , value = 16, min = 1, max = 100)),
+    
+    
+    ## Cauchy Distribution
+    
+    conditionalPanel(
+      condition = "input.contin_distributions== 'cauchy'",
+      sliderInput("x0_cauchy", "x" , value = 10, min = 1, max = 45),
+      sliderInput("gamma_cauchy", "Gamma" , value = 16, min = 1, max = 100)),
+    
+    
+    ## Weibull Distribution
+    
+    conditionalPanel(
+      condition = "input.contin_distributions== 'weibull'",
+      sliderInput("lambda_wei", "lambda" , value = 10, min = 1, max = 45),
+      sliderInput("k_wei", "k" , value = 16, min = 1, max = 100))
     
   )
 )
