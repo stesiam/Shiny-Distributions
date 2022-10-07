@@ -110,12 +110,57 @@ sidebar = dashboardSidebar(
                   "Beta" = "beta",
                   "Cauchy" = "cauchy",
                   "Weibull" = "weibull")),
+    
+    
   )
 )
 
 ## Main panel
 
-body  = dashboardBody()
+body  = dashboardBody(
+  fluidRow(
+  box(
+    title = "Plot",width = 4, status = "primary", solidHeader = TRUE,
+    collapsible = FALSE
+  ),
+  box(
+    title = "Plot",width = 4, status = "primary", solidHeader = TRUE,
+    collapsible = FALSE
+  ),
+  box(
+    title = "Plot",width = 4, status = "primary", solidHeader = TRUE,
+    collapsible = FALSE
+  )
+),
+  
+  fluidRow(
+    box(
+      title = "Box title", width = 2, status = "primary",
+      "Box content"
+    ),
+    box(
+      status = "warning", width = 2,
+      "Box content"
+    ),
+    box(
+      status = "warning", width = 2,
+      "Box content"
+    ),
+    box(
+      status = "warning", width = 2,
+      "Box content"
+    ),
+    box(
+      status = "warning", width = 2,
+      "Box content"
+    ),
+    box(
+      status = "warning", width = 2,
+      "Box content"
+    )
+  )
+  
+)
 
 
 
@@ -132,6 +177,8 @@ ui <- dashboardPage(
 
 
 server <- function(input, output) {
+  
+  
 }
 
 shinyApp(ui = ui, server = server)
