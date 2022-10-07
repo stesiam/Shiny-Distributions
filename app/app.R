@@ -161,43 +161,72 @@ sidebar = dashboardSidebar(
 
 body  = dashboardBody(
   fluidRow(
-  box(
-    title = "Plot",width = 4, status = "primary", solidHeader = TRUE,
-    collapsible = FALSE
+    box(
+      title = "Plot - PDF",
+      width = 6,
+      status = "primary",
+      solidHeader = TRUE,
+      collapsible = FALSE
+    ),
+    box(
+      title = "Plot - CDF",
+      width = 6,
+      status = "primary",
+      solidHeader = TRUE,
+      collapsible = FALSE
+    )
   ),
-  box(
-    title = "Plot",width = 4, status = "primary", solidHeader = TRUE,
-    collapsible = FALSE
-  ),
-  box(
-    title = "Plot",width = 4, status = "primary", solidHeader = TRUE,
-    collapsible = FALSE
-  )
-),
   
   fluidRow(
     box(
-      title = "Box title", width = 2, status = "primary",
+      title = "Mean",
+      width = 3,
+      status = "primary",
       "Box content"
     ),
     box(
-      status = "warning", width = 2,
+      title = "Variance",
+      width = 3,
+      status = "primary",
       "Box content"
     ),
     box(
-      status = "warning", width = 2,
+      title = "Median",
+      width = 3,
+      status = "primary",
       "Box content"
     ),
     box(
-      status = "warning", width = 2,
+      title = "Mode",
+      width = 3,
+      status = "primary",
+      "Box content"
+    )
+  ),
+  
+  fluidRow(
+    box(
+      title = "Skewness",
+      width = 3,
+      status = "primary",
       "Box content"
     ),
     box(
-      status = "warning", width = 2,
+      title = "Kurtosis",
+      width = 3,
+      status = "primary",
       "Box content"
     ),
     box(
-      status = "warning", width = 2,
+      title = "Entropy",
+      width = 3,
+      status = "primary",
+      "Box content"
+    ),
+    box(
+      title = "...",
+      width = 3,
+      status = "primary",
       "Box content"
     )
   )
@@ -220,6 +249,8 @@ ui <- dashboardPage(
 
 server <- function(input, output) {
   
+  
+  ## Binomial
   
 }
 
