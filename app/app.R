@@ -182,25 +182,36 @@ body  = dashboardBody(
       title = "Mean",
       width = 3,
       status = "primary",
-      "Box content"
+      
+       # Bernoulli 
+      conditionalPanel(
+        condition = "input.discrete_dist== 'bernoulli'",
+        verbatimTextOutput("mean")
+        
+      # Binomial
+      
+      #
+      
+      
+      )
     ),
     box(
       title = "Variance",
       width = 3,
       status = "primary",
-      "Box content"
+      verbatimTextOutput("var")
     ),
     box(
       title = "Median",
       width = 3,
       status = "primary",
-      "Box content"
+      verbatimTextOutput("median")
     ),
     box(
       title = "Mode",
       width = 3,
       status = "primary",
-      "Box content"
+      verbatimTextOutput("mode")
     )
   ),
   
@@ -209,22 +220,22 @@ body  = dashboardBody(
       title = "Skewness",
       width = 3,
       status = "primary",
-      "Box content"
+      verbatimTextOutput("skewness")
     ),
     box(
       title = "Kurtosis",
       width = 3,
       status = "primary",
-      "Box content"
+      verbatimTextOutput("kurtosis")
     ),
     box(
       title = "Entropy",
       width = 3,
       status = "primary",
-      "Box content"
+      verbatimTextOutput("entropy")
     ),
     box(
-      title = "...",
+      title = "Fisher Information",
       width = 3,
       status = "primary",
       "Box content"
@@ -250,8 +261,42 @@ ui <- dashboardPage(
 server <- function(input, output) {
   
   
-  ## Binomial
+  # Plot PDF
   
+  
+  # Plot CDF
+  
+  
+  
+  
+  # Mean 
+
+  output$mean <- renderText({ bern_mean(input$bernoulli_p) })
+  
+  # Variance
+  
+  output$var <- renderText(({ bern_var(input$bernoulli_p) }))
+  
+  # Median
+  
+  output$median <- renderText(({ bern_median(input$bernoulli_p) }))
+  
+  # Mode
+  
+  output$mode <- renderText(({ bern_mode(input$bernoulli_p) }))
+  
+  # Skewness
+  
+  output$skewness <- renderText(({ bern_skewness(input$bernoulli_p) }))
+  
+  # Kurtosis
+  
+  output$kurtosis <- renderText(({ bern_kurtosis(input$bernoulli_p) }))
+  
+  # Entropy
+  
+  output$entropy <- renderText(({ bern_entropy(input$bernoulli_p) }))
+
 }
 
 shinyApp(ui = ui, server = server)
