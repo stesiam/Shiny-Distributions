@@ -31,7 +31,6 @@ sidebar = dashboardSidebar(
                   "Geometric (1)" = "geom1",
                   "Negative Binomial (0)" = "negbinom0",
                   "Negative Binomial (1)" = "negbinom1",
-                  "Hypergeometric" = "hypergeom",
                   "Discrete Uniform" = "dunif")),
     
     ### Conditional Panels for each distribution
@@ -60,18 +59,18 @@ sidebar = dashboardSidebar(
    
    conditionalPanel(
      condition = "input.discrete_dist == 'geom0'",
-     numericInput("n_binom", "p" , value = 0.5)),
+     sliderInput("p0_geom", "p" , value = 0.5, max = 1, min = 0)),
    
    conditionalPanel(
      condition = "input.discrete_dist == 'geom1'",
-     numericInput("n_binom", "p" , value = 0.5)),
+     sliderInput("p1_geom", "p" , value = 0.5, max = 1, min = 0)),
    
    ## NB0
    
    conditionalPanel(
      condition = "input.discrete_dist == 'negbinom0'",
      numericInput("r0", "r" , value = 5),
-     numericInput("p0", "p" , value = 0.5)),
+     sliderInput("p0", "p" , value = 0.5, max = 1, min = 0)),
    
    
    
@@ -81,16 +80,8 @@ sidebar = dashboardSidebar(
    conditionalPanel(
      condition = "input.discrete_dist == 'negbinom1'",
      numericInput("r1", "r" , value = 5),
-     numericInput("p1", "p" , value = 0.5)),
+     sliderInput("p1", "p" , value = 0.5, max = 1, min = 0)),
    
-   
-   ## Hypergeometric
-   
-   conditionalPanel(
-     condition = "input.discrete_dist == 'hypergeom'",
-     numericInput("n_hyper", "r" , value = 0.5),
-     numericInput("a_hyper", "p" , value = 0.5),
-     numericInput("b_hyper", "r" , value = 0.5)),
    
    
    ## Discrete Uniform
@@ -192,6 +183,9 @@ body  = dashboardBody(
       width = 3,
       status = "primary",
       
+      conditionalPanel(
+        condition = "input.type_of_distribution == 'dis'",
+      
        # Bernoulli 
       conditionalPanel(
         condition = "input.discrete_dist== 'bernoulli'",
@@ -201,8 +195,64 @@ body  = dashboardBody(
     
       conditionalPanel(
         condition = "input.discrete_dist== 'binom'",
-        verbatimTextOutput("mean_binom"))
+        verbatimTextOutput("mean_binom")),
       
+      # Poisson
+      
+      conditionalPanel(
+        condition = "input.discrete_dist== 'poisson'",
+        verbatimTextOutput("mean_poisson")),
+      
+      # Geom0
+      
+      conditionalPanel(
+        condition = "input.discrete_dist== 'geom0'",
+        verbatimTextOutput("mean_geom0")),
+      
+      # Geom1
+      
+      conditionalPanel(
+        condition = "input.discrete_dist== 'geom1'",
+        verbatimTextOutput("mean_geom1")),
+      
+      # NB0
+      
+      conditionalPanel(
+        condition = "input.discrete_dist== 'negbinom0'",
+        verbatimTextOutput("mean_nb0")),
+    
+      
+      # Discrete Uniform
+      
+      conditionalPanel(
+        condition = "input.discrete_dist== 'dunif'",
+        verbatimTextOutput("mean_dunif"))
+     
+      ),
+      
+      conditionalPanel(
+        condition = "input.type_of_distribution == 'cont'",
+       
+      # Normal
+      
+      conditionalPanel(
+        condition = "input.contin_distributions== 'normal'",
+        verbatimTextOutput("mean_norm")),
+      
+      # Continuous uniform
+      
+      conditionalPanel(
+        condition = "input.contin_distributions== 'uniform'",
+        verbatimTextOutput("mean_unif")),
+      
+      # Exponential
+      
+      conditionalPanel(
+        condition = "input.contin_distributions== 'exp'",
+        verbatimTextOutput("mean_exp"))
+      
+     
+      )
       
     ),
     box(
@@ -210,20 +260,227 @@ body  = dashboardBody(
       width = 3,
       status = "primary",
       
+      conditionalPanel(
+        condition = "input.type_of_distribution == 'dis'",
+        
+        # Bernoulli 
+        conditionalPanel(
+          condition = "input.discrete_dist== 'bernoulli'",
+          verbatimTextOutput("var_bern")),
+        
+        # Binomial
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'binom'",
+          verbatimTextOutput("var_binom")),
+        
+        # Poisson
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'poisson'",
+          verbatimTextOutput("var_poisson")),
+        
+        # Geom0
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'geom0'",
+          verbatimTextOutput("var_geom0")),
+        
+        # Geom1
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'geom1'",
+          verbatimTextOutput("var_geom1")),
+        
+        # NB0
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'negbinom0'",
+          verbatimTextOutput("var_nb0")),
+        
+        # Discrete Uniform
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'dunif'",
+          verbatimTextOutput("var_dunif"))
+        
+      ),
       
-      verbatimTextOutput("var_bern")
+      conditionalPanel(
+        condition = "input.type_of_distribution == 'cont'",
+        
+        # Normal
+        
+        conditionalPanel(
+          condition = "input.contin_distributions== 'normal'",
+          verbatimTextOutput("var_norm")),
+        
+        # Continuous uniform
+        
+        conditionalPanel(
+          condition = "input.contin_distributions== 'uniform'",
+          verbatimTextOutput("var_unif")),
+        
+        # Exponential
+        
+        conditionalPanel(
+          condition = "input.contin_distributions== 'exp'",
+          verbatimTextOutput("var_exp"))
+        
+        
+      )
     ),
     box(
       title = "Median",
       width = 3,
       status = "primary",
-      verbatimTextOutput("median")
+      
+      conditionalPanel(
+        condition = "input.type_of_distribution == 'dis'",
+        
+        # Bernoulli 
+        conditionalPanel(
+          condition = "input.discrete_dist== 'bernoulli'",
+          verbatimTextOutput("median_bern")),
+        
+        # Binomial
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'binom'",
+          verbatimTextOutput("median_binom")),
+        
+        # Poisson
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'poisson'",
+          verbatimTextOutput("median_poisson")),
+        
+        # Geom0
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'geom0'",
+          verbatimTextOutput("median_geom0")),
+        
+        # Geom1
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'geom1'",
+          verbatimTextOutput("median_geom1")),
+        
+        # NB0
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'negbinom0'",
+          verbatimTextOutput("median_nb0")),
+        
+        
+        # Discrete Uniform
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'dunif'",
+          verbatimTextOutput("median_dunif"))
+        
+      ),
+      
+      conditionalPanel(
+        condition = "input.type_of_distribution == 'cont'",
+        
+        # Normal
+        
+        conditionalPanel(
+          condition = "input.contin_distributions== 'normal'",
+          verbatimTextOutput("median_norm")),
+        
+        # Continuous uniform
+        
+        conditionalPanel(
+          condition = "input.contin_distributions== 'uniform'",
+          verbatimTextOutput("median_unif")),
+        
+        # Exponential
+        
+        conditionalPanel(
+          condition = "input.contin_distributions== 'exp'",
+          verbatimTextOutput("median_exp"))
+        
+        
+      )
     ),
     box(
       title = "Mode",
       width = 3,
       status = "primary",
-      verbatimTextOutput("mode")
+      
+      conditionalPanel(
+        condition = "input.type_of_distribution == 'dis'",
+        
+        # Bernoulli 
+        conditionalPanel(
+          condition = "input.discrete_dist== 'bernoulli'",
+          verbatimTextOutput("mode_bern")),
+        
+        # Binomial
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'binom'",
+          verbatimTextOutput("mode_binom")),
+        
+        # Poisson
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'poisson'",
+          verbatimTextOutput("mode_poisson")),
+        
+        # Geom0
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'geom0'",
+          verbatimTextOutput("mode_geom0")),
+        
+        # Geom1
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'geom1'",
+          verbatimTextOutput("mode_geom1")),
+        
+        # NB0
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'negbinom0'",
+          verbatimTextOutput("mode_nb0")),
+      
+        
+        # Discrete Uniform
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'dunif'",
+          verbatimTextOutput("mode_dunif"))
+        
+      ),
+      
+      conditionalPanel(
+        condition = "input.type_of_distribution == 'cont'",
+        
+        # Normal
+        
+        conditionalPanel(
+          condition = "input.contin_distributions== 'normal'",
+          verbatimTextOutput("mode_norm")),
+        
+        # Continuous uniform
+        
+        conditionalPanel(
+          condition = "input.contin_distributions== 'uniform'",
+          verbatimTextOutput("mode_unif")),
+        
+        # Exponential
+        
+        conditionalPanel(
+          condition = "input.contin_distributions== 'exp'",
+          verbatimTextOutput("mode_exp"))
+        
+        
+      )
     )
   ),
   
@@ -232,13 +489,153 @@ body  = dashboardBody(
       title = "Skewness",
       width = 3,
       status = "primary",
-      verbatimTextOutput("skewness")
+      
+      conditionalPanel(
+        condition = "input.type_of_distribution == 'dis'",
+        
+        # Bernoulli 
+        conditionalPanel(
+          condition = "input.discrete_dist== 'bernoulli'",
+          verbatimTextOutput("skew_bern")),
+        
+        # Binomial
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'binom'",
+          verbatimTextOutput("skew_binom")),
+        
+        # Poisson
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'poisson'",
+          verbatimTextOutput("skew_poisson")),
+        
+        # Geom0
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'geom0'",
+          verbatimTextOutput("skew_geom0")),
+        
+        # Geom1
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'geom1'",
+          verbatimTextOutput("skew_geom1")),
+        
+        # NB0
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'negbinom0'",
+          verbatimTextOutput("skew_nb0")),
+    
+        
+        # Discrete Uniform
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'dunif'",
+          verbatimTextOutput("skew_dunif"))
+        
+      ),
+      
+      conditionalPanel(
+        condition = "input.type_of_distribution == 'cont'",
+        
+        # Normal
+        
+        conditionalPanel(
+          condition = "input.contin_distributions== 'normal'",
+          verbatimTextOutput("skew_norm")),
+        
+        # Continuous uniform
+        
+        conditionalPanel(
+          condition = "input.contin_distributions== 'uniform'",
+          verbatimTextOutput("skew_unif")),
+        
+        # Exponential
+        
+        conditionalPanel(
+          condition = "input.contin_distributions== 'exp'",
+          verbatimTextOutput("skew_exp"))
+        
+        
+      )
     ),
     box(
       title = "Kurtosis",
       width = 3,
       status = "primary",
-      verbatimTextOutput("kurtosis")
+      
+      conditionalPanel(
+        condition = "input.type_of_distribution == 'dis'",
+        
+        # Bernoulli 
+        conditionalPanel(
+          condition = "input.discrete_dist== 'bernoulli'",
+          verbatimTextOutput("kurtosis_bern")),
+        
+        # Binomial
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'binom'",
+          verbatimTextOutput("kurtosis_binom")),
+        
+        # Poisson
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'poisson'",
+          verbatimTextOutput("kurtosis_poisson")),
+        
+        # Geom0
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'geom0'",
+          verbatimTextOutput("kurtosis_geom0")),
+        
+        # Geom1
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'geom1'",
+          verbatimTextOutput("kurtosis_geom1")),
+        
+        # NB0
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'negbinom0'",
+          verbatimTextOutput("kurtosis_nb0")),
+      
+        
+        # Discrete Uniform
+        
+        conditionalPanel(
+          condition = "input.discrete_dist== 'dunif'",
+          verbatimTextOutput("kurtosis_dunif"))
+        
+      ),
+      
+      conditionalPanel(
+        condition = "input.type_of_distribution == 'cont'",
+        
+        # Normal
+        
+        conditionalPanel(
+          condition = "input.contin_distributions== 'normal'",
+          verbatimTextOutput("kurtosis_norm")),
+        
+        # Continuous uniform
+        
+        conditionalPanel(
+          condition = "input.contin_distributions== 'uniform'",
+          verbatimTextOutput("kurtosis_unif")),
+        
+        # Exponential
+        
+        conditionalPanel(
+          condition = "input.contin_distributions== 'exp'",
+          verbatimTextOutput("kurtosis_exp"))
+        
+        
+      )
     ),
     box(
       title = "Entropy",
@@ -249,8 +646,7 @@ body  = dashboardBody(
     box(
       title = "Fisher Information",
       width = 3,
-      status = "primary",
-      "Box content"
+      status = "primary"
     )
   )
   
@@ -288,10 +684,9 @@ server <- function(input, output) {
   output$mean_bern <- renderText({ bern(input$bernoulli_p)$mean })
   output$mean_binom <- renderText({ binom(input$n_binom, input$binom_p)$mean })
   output$mean_poisson <- renderText(({ poisson(input$lambda_poisson)$mean }))
-  output$mean_geom0 <- renderText(({ geometric0(input$geom0)$mean }))
-  output$mean_geom1 <- renderText(({ geometric1(input$geom1)$mean }))
+  output$mean_geom0 <- renderText(({ geometric0(input$p0_geom)$mean }))
+  output$mean_geom1 <- renderText(({ geometric1(input$p1_geom)$mean }))
   output$mean_nb0 <- renderText(({ nb0(input$r0, input$p0)$mean }))
-  output$mean_hypergeom <- renderText(({ hypergeom(input$n_hyper, input$a_hyper, input$b_hyper)$mean }))
   output$mean_dunif <- renderText(({ duniform(input$a_dunif, input$b_dunif)$mean }))
   
   
@@ -307,10 +702,9 @@ server <- function(input, output) {
   output$var_bern <- renderText({ bern(input$bernoulli_p)$var })
   output$var_binom <- renderText({ binom(input$n_binom, input$binom_p)$var })
   output$var_poisson <- renderText(({ poisson(input$lambda_poisson)$var }))
-  output$var_geom0 <- renderText(({ geometric0(input$geom0)$var}))
-  output$var_geom1 <- renderText(({ geometric1(input$geom1)$var }))
+  output$var_geom0 <- renderText(({ geometric0(input$p0_geom)$var }))
+  output$var_geom1 <- renderText(({ geometric1(input$p1_geom)$var }))
   output$var_nb0 <- renderText(({ nb0(input$r0, input$p0)$var }))
-  output$var_hypergeom <- renderText(({ hypergeom(input$n_hyper, input$a_hyper, input$b_hyper)$var }))
   output$var_dunif <- renderText(({ duniform(input$a_dunif, input$b_dunif)$var }))
   
   
@@ -323,10 +717,9 @@ server <- function(input, output) {
   output$median_bern <- renderText({ bern(input$bernoulli_p)$median })
   output$median_binom <- renderText({ binom(input$n_binom, input$binom_p)$median })
   output$median_poisson <- renderText(({ poisson(input$lambda_poisson)$median }))
-  output$median_geom0 <- renderText(({ geometric0(input$geom0)$median}))
-  output$median_geom1 <- renderText(({ geometric1(input$geom1)$median }))
+  output$median_geom0 <- renderText(({ geometric0(input$p0_geom)$median }))
+  output$median_geom1 <- renderText(({ geometric1(input$p1_geom)$median }))
   output$median_nb0 <- renderText(({ nb0(input$r0, input$p0)$median }))
-  output$median_hypergeom <- renderText(({ hypergeom(input$n_hyper, input$a_hyper, input$b_hyper)$median }))
   output$median_dunif <- renderText(({ duniform(input$a_dunif, input$b_dunif)$median }))
   
   
@@ -339,10 +732,9 @@ server <- function(input, output) {
   output$mode_bern <- renderText({ bern(input$bernoulli_p)$mode })
   output$mode_binom <- renderText({ binom(input$n_binom, input$binom_p)$mode })
   output$mode_poisson <- renderText(({ poisson(input$lambda_poisson)$mode }))
-  output$mode_geom0 <- renderText(({ geometric0(input$geom0)$mode}))
-  output$mode_geom1 <- renderText(({ geometric1(input$geom1)$mode }))
+  output$mode_geom0 <- renderText(({ geometric0(input$p0_geom)$mode }))
+  output$mode_geom1 <- renderText(({ geometric1(input$p1_geom)$mode }))
   output$mode_nb0 <- renderText(({ nb0(input$r0, input$p0)$mode }))
-  output$mode_hypergeom <- renderText(({ hypergeom(input$n_hyper, input$a_hyper, input$b_hyper)$mode }))
   output$mode_dunif <- renderText(({ duniform(input$a_dunif, input$b_dunif)$mode }))
   
   
@@ -355,10 +747,9 @@ server <- function(input, output) {
   output$skew_bern <- renderText({ bern(input$bernoulli_p)$skew })
   output$skew_binom <- renderText({ binom(input$n_binom, input$binom_p)$skew })
   output$skew_poisson <- renderText(({ poisson(input$lambda_poisson)$skew }))
-  output$skew_geom0 <- renderText(({ geometric0(input$geom0)$skew}))
-  output$skew_geom1 <- renderText(({ geometric1(input$geom1)$skew }))
+  output$skew_geom0 <- renderText(({ geometric0(input$p0_geom)$skew }))
+  output$skew_geom1 <- renderText(({ geometric1(input$p1_geom)$skew }))
   output$skew_nb0 <- renderText(({ nb0(input$r0, input$p0)$skew }))
-  output$skew_hypergeom <- renderText(({ hypergeom(input$n_hyper, input$a_hyper, input$b_hyper)$skew }))
   output$skew_dunif <- renderText(({ duniform(input$a_dunif, input$b_dunif)$skew}))
   
   
@@ -371,10 +762,9 @@ server <- function(input, output) {
   output$kurtosis_bern <- renderText({ bern(input$bernoulli_p)$kurtosis })
   output$kurtosis_binom <- renderText({ binom(input$n_binom, input$binom_p)$kurtosis })
   output$kurtosis_poisson <- renderText(({ poisson(input$lambda_poisson)$kurtosis }))
-  output$kurtosis_geom0 <- renderText(({ geometric0(input$geom0)$kurtosis}))
-  output$kurtosis_geom1 <- renderText(({ geometric1(input$geom1)$kurtosis }))
+  output$kurtosis_geom0 <- renderText(({ geometric0(input$p0_geom)$kurtosis }))
+  output$kurtosis_geom1 <- renderText(({ geometric1(input$p1_geom)$kurtosis }))
   output$kurtosis_nb0 <- renderText(({ nb0(input$r0, input$p0)$kurtosis }))
-  output$kurtosis_hypergeom <- renderText(({ hypergeom(input$n_hyper, input$a_hyper, input$b_hyper)$kurtosis }))
   output$kurtosis_dunif <- renderText(({ duniform(input$a_dunif, input$b_dunif)$kurtosis }))
   
   

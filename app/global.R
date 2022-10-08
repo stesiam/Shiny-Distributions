@@ -122,17 +122,6 @@ nb0<- function(r,p){
 ## TODO: Negative Binomial 1
 
 
-## Hypergeometric 
-
-hypergeom <- function(n,a,b){
-  mean = a*b/n
-  var = mean* ((n-a)/n) * ((n-b)/(n-1))
-  median = "..."
-  mode = floor((a+1)*(b+1)/(n+2))
-  skewness = "..."
-  kurtosis = "..."
-  }
-
 ## Discrete Uniform
 
 duniform <- function(a,b){
@@ -191,7 +180,7 @@ unifdist <- function(a,b){
 
 ## Exponential Distribution
 
-expodist <- function(lambda){
+expdist <- function(lambda){
   mean = 1/lambda
   var = 1/lambda^2
   median = log(2)/lambda
