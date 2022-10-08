@@ -1,6 +1,11 @@
 library(shiny)
 library(shinydashboard)
 
+
+## Add dependent files
+
+source("global.R")
+
 ## Header
 
 
