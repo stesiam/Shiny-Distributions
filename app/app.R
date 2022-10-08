@@ -191,11 +191,14 @@ body  = dashboardBody(
        # Bernoulli 
       conditionalPanel(
         condition = "input.discrete_dist== 'bernoulli'",
-        verbatimTextOutput("mean")
+        verbatimTextOutput("mean_bern")),
         
       # Binomial
       
-      #
+      # Bernoulli 
+      conditionalPanel(
+        condition = "input.discrete_dist== 'binom'",
+        verbatimTextOutput("mean_binom"),
       
       
       )
@@ -204,7 +207,9 @@ body  = dashboardBody(
       title = "Variance",
       width = 3,
       status = "primary",
-      verbatimTextOutput("var")
+      
+      
+      verbatimTextOutput("var_bern")
     ),
     box(
       title = "Median",
@@ -276,11 +281,23 @@ server <- function(input, output) {
   
   # Mean 
 
-  output$mean <- renderText({ bern_mean(input$bernoulli_p) })
+  #output$mean <- renderText({ bern_mean(input$bernoulli_p) })
+  
+  output$mean_bern <- renderText({ bern(input$bernoulli_p)$mean })
+  
+  output$mean_binom <- renderText({ binom(input$n_binom, input$binom_p)$mean })
+  
+  
+  
+  
+  
   
   # Variance
   
-  output$var <- renderText(({ bern_var(input$bernoulli_p) }))
+  output$var_bern <- renderText(({ bern(input$bernoulli_p)$var }))
+  
+  output$var_binom <- renderText(({ bern(input$n_binom, input$binom_p)$var }))
+  
   
   # Median
   
