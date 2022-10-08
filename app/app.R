@@ -27,7 +27,8 @@ sidebar = dashboardSidebar(
                 c("Bernoulli" = "bernoulli",
                   "Binomial" = "binom",
                   "Poisson" = "poisson",
-                  "Geometric" = "geom",
+                  "Geometric (0)" = "geom0",
+                  "Geometric (1)" = "geom1",
                   "Negative Binomial (0)" = "negbinom0",
                   "Negative Binomial (1)" = "negbinom1",
                   "Hypergeometric" = "hypergeom",
@@ -55,12 +56,15 @@ sidebar = dashboardSidebar(
      condition = "input.discrete_dist == 'poisson'",
      numericInput("lambda_poisson", "Lambda" , value = 2)),
    
-   ## Geometric
+   ## Geometric0
    
    conditionalPanel(
-     condition = "input.discrete_dist == 'geom'",
+     condition = "input.discrete_dist == 'geom0'",
      numericInput("n_binom", "p" , value = 0.5)),
    
+   conditionalPanel(
+     condition = "input.discrete_dist == 'geom1'",
+     numericInput("n_binom", "p" , value = 0.5)),
    
    ## NB0
    
