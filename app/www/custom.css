@@ -1,0 +1,11 @@
+.box-header, .box-title{
+  font-size: 26px;
+  font-weight: bold;
+  margin: 0;
+  line-height: 1;
+  text-align: center;
+}
+
+.box-body{
+  background-color: white;
+}

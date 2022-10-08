@@ -160,6 +160,7 @@ sidebar = dashboardSidebar(
 ## Main panel
 
 body  = dashboardBody(
+  includeCSS("www/custom.css"),
   fluidRow(
     box(
       title = "Plot - PDF",
