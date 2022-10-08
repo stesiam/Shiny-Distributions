@@ -191,7 +191,7 @@ unifdist <- function(a,b){
 
 ## Exponential Distribution
 
-exponential <- function(lambda){
+expodist <- function(lambda){
   mean = 1/lambda
   var = 1/lambda^2
   median = log(2)/lambda

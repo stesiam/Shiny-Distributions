@@ -70,8 +70,8 @@ sidebar = dashboardSidebar(
    
    conditionalPanel(
      condition = "input.discrete_dist == 'negbinom0'",
-     numericInput("r1", "r" , value = 0.5),
-     numericInput("p1", "p" , value = 0.5)),
+     numericInput("r0", "r" , value = 5),
+     numericInput("p0", "p" , value = 0.5)),
    
    
    
@@ -80,7 +80,7 @@ sidebar = dashboardSidebar(
    
    conditionalPanel(
      condition = "input.discrete_dist == 'negbinom1'",
-     numericInput("r1", "r" , value = 0.5),
+     numericInput("r1", "r" , value = 5),
      numericInput("p1", "p" , value = 0.5)),
    
    
@@ -88,9 +88,9 @@ sidebar = dashboardSidebar(
    
    conditionalPanel(
      condition = "input.discrete_dist == 'hypergeom'",
-     numericInput("r1", "r" , value = 0.5),
-     numericInput("p1", "p" , value = 0.5),
-     numericInput("r1", "r" , value = 0.5)),
+     numericInput("n_hyper", "r" , value = 0.5),
+     numericInput("a_hyper", "p" , value = 0.5),
+     numericInput("b_hyper", "r" , value = 0.5)),
    
    
    ## Discrete Uniform
@@ -198,14 +198,12 @@ body  = dashboardBody(
         verbatimTextOutput("mean_bern")),
         
       # Binomial
-      
-      # Bernoulli 
+    
       conditionalPanel(
         condition = "input.discrete_dist== 'binom'",
-        verbatimTextOutput("mean_binom"),
+        verbatimTextOutput("mean_binom"))
       
       
-      )
     ),
     box(
       title = "Variance",
@@ -288,40 +286,104 @@ server <- function(input, output) {
   #output$mean <- renderText({ bern_mean(input$bernoulli_p) })
   
   output$mean_bern <- renderText({ bern(input$bernoulli_p)$mean })
-  
   output$mean_binom <- renderText({ binom(input$n_binom, input$binom_p)$mean })
+  output$mean_poisson <- renderText(({ poisson(input$lambda_poisson)$mean }))
+  output$mean_geom0 <- renderText(({ geometric0(input$geom0)$mean }))
+  output$mean_geom1 <- renderText(({ geometric1(input$geom1)$mean }))
+  output$mean_nb0 <- renderText(({ nb0(input$r0, input$p0)$mean }))
+  output$mean_hypergeom <- renderText(({ hypergeom(input$n_hyper, input$a_hyper, input$b_hyper)$mean }))
+  output$mean_dunif <- renderText(({ duniform(input$a_dunif, input$b_dunif)$mean }))
   
   
+  output$mean_norm <- renderText({ normaldist(input$mean_normal, input$var_normal)$mean })
+  output$mean_unif <- renderText({ unifdist(input$a_unif, input$b_unif)$mean })
+  output$mean_exp <- renderText({ expdist(input$lambda_exp)$mean })
   
   
   
   
   # Variance
   
-  output$var_bern <- renderText(({ bern(input$bernoulli_p)$var }))
+  output$var_bern <- renderText({ bern(input$bernoulli_p)$var })
+  output$var_binom <- renderText({ binom(input$n_binom, input$binom_p)$var })
+  output$var_poisson <- renderText(({ poisson(input$lambda_poisson)$var }))
+  output$var_geom0 <- renderText(({ geometric0(input$geom0)$var}))
+  output$var_geom1 <- renderText(({ geometric1(input$geom1)$var }))
+  output$var_nb0 <- renderText(({ nb0(input$r0, input$p0)$var }))
+  output$var_hypergeom <- renderText(({ hypergeom(input$n_hyper, input$a_hyper, input$b_hyper)$var }))
+  output$var_dunif <- renderText(({ duniform(input$a_dunif, input$b_dunif)$var }))
   
-  output$var_binom <- renderText(({ bern(input$n_binom, input$binom_p)$var }))
   
+  output$var_norm <- renderText({ normaldist(input$mean_normal, input$var_normal)$var })
+  output$var_unif <- renderText({ unifdist(input$a_unif, input$b_unif)$var })
+  output$var_exp <- renderText({ expdist(input$lambda_exp)$var })
   
   # Median
   
-  output$median <- renderText(({ bern_median(input$bernoulli_p) }))
+  output$median_bern <- renderText({ bern(input$bernoulli_p)$median })
+  output$median_binom <- renderText({ binom(input$n_binom, input$binom_p)$median })
+  output$median_poisson <- renderText(({ poisson(input$lambda_poisson)$median }))
+  output$median_geom0 <- renderText(({ geometric0(input$geom0)$median}))
+  output$median_geom1 <- renderText(({ geometric1(input$geom1)$median }))
+  output$median_nb0 <- renderText(({ nb0(input$r0, input$p0)$median }))
+  output$median_hypergeom <- renderText(({ hypergeom(input$n_hyper, input$a_hyper, input$b_hyper)$median }))
+  output$median_dunif <- renderText(({ duniform(input$a_dunif, input$b_dunif)$median }))
+  
+  
+  output$median_norm <- renderText({ normaldist(input$mean_normal, input$var_normal)$median })
+  output$median_unif <- renderText({ unifdist(input$a_unif, input$b_unif)$median })
+  output$median_exp <- renderText({ expdist(input$lambda_exp)$median })
   
   # Mode
   
-  output$mode <- renderText(({ bern_mode(input$bernoulli_p) }))
+  output$mode_bern <- renderText({ bern(input$bernoulli_p)$mode })
+  output$mode_binom <- renderText({ binom(input$n_binom, input$binom_p)$mode })
+  output$mode_poisson <- renderText(({ poisson(input$lambda_poisson)$mode }))
+  output$mode_geom0 <- renderText(({ geometric0(input$geom0)$mode}))
+  output$mode_geom1 <- renderText(({ geometric1(input$geom1)$mode }))
+  output$mode_nb0 <- renderText(({ nb0(input$r0, input$p0)$mode }))
+  output$mode_hypergeom <- renderText(({ hypergeom(input$n_hyper, input$a_hyper, input$b_hyper)$mode }))
+  output$mode_dunif <- renderText(({ duniform(input$a_dunif, input$b_dunif)$mode }))
+  
+  
+  output$mode_norm <- renderText({ normaldist(input$mean_normal, input$var_normal)$mode })
+  output$mode_unif <- renderText({ unifdist(input$a_unif, input$b_unif)$mode })
+  output$mode_exp <- renderText({ expdist(input$lambda_exp)$mode })
   
   # Skewness
   
-  output$skewness <- renderText(({ bern_skewness(input$bernoulli_p) }))
+  output$skew_bern <- renderText({ bern(input$bernoulli_p)$skew })
+  output$skew_binom <- renderText({ binom(input$n_binom, input$binom_p)$skew })
+  output$skew_poisson <- renderText(({ poisson(input$lambda_poisson)$skew }))
+  output$skew_geom0 <- renderText(({ geometric0(input$geom0)$skew}))
+  output$skew_geom1 <- renderText(({ geometric1(input$geom1)$skew }))
+  output$skew_nb0 <- renderText(({ nb0(input$r0, input$p0)$skew }))
+  output$skew_hypergeom <- renderText(({ hypergeom(input$n_hyper, input$a_hyper, input$b_hyper)$skew }))
+  output$skew_dunif <- renderText(({ duniform(input$a_dunif, input$b_dunif)$skew}))
+  
+  
+  output$skew_norm <- renderText({ normaldist(input$mean_normal, input$var_normal)$skew })
+  output$skew_unif <- renderText({ unifdist(input$a_unif, input$b_unif)$skew })
+  output$skew_exp <- renderText({ expdist(input$lambda_exp)$skew })
   
   # Kurtosis
   
-  output$kurtosis <- renderText(({ bern_kurtosis(input$bernoulli_p) }))
+  output$kurtosis_bern <- renderText({ bern(input$bernoulli_p)$kurtosis })
+  output$kurtosis_binom <- renderText({ binom(input$n_binom, input$binom_p)$kurtosis })
+  output$kurtosis_poisson <- renderText(({ poisson(input$lambda_poisson)$kurtosis }))
+  output$kurtosis_geom0 <- renderText(({ geometric0(input$geom0)$kurtosis}))
+  output$kurtosis_geom1 <- renderText(({ geometric1(input$geom1)$kurtosis }))
+  output$kurtosis_nb0 <- renderText(({ nb0(input$r0, input$p0)$kurtosis }))
+  output$kurtosis_hypergeom <- renderText(({ hypergeom(input$n_hyper, input$a_hyper, input$b_hyper)$kurtosis }))
+  output$kurtosis_dunif <- renderText(({ duniform(input$a_dunif, input$b_dunif)$kurtosis }))
+  
+  
+  output$kurtosis_norm <- renderText({ normaldist(input$mean_normal, input$var_normal)$kurtosis })
+  output$kurtosis_unif <- renderText({ unifdist(input$a_unif, input$b_unif)$kurtosis })
+  output$kurtosis_exp <- renderText({ expdist(input$lambda_exp)$kurtosis })
   
   # Entropy
   
-  output$entropy <- renderText(({ bern_entropy(input$bernoulli_p) }))
 
 }
 
